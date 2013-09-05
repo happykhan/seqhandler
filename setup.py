@@ -34,7 +34,7 @@ setup(
     author_email=meta.__author_email__,
     url=meta.__url__,
     packages=packages,
-    scripts = [meta.__title__+"/"+meta.__title__]
+    scripts = [meta.__title__+"/"+meta.__title__],
     package_data={'': ['LICENSE']},
     package_dir={meta.__title__: meta.__title__},
     include_package_data=True,
