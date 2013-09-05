@@ -66,7 +66,8 @@ Where:
 
 See USAGE (python SeqHandler.py convert -h) for full list of supported files.
 
-### CHANGE LOG ### 
+CHANGE LOG
+----------
 2013-04-16 Nabil-Fareed Alikhan <n.alikhan@uq.edu.au>
     * Version 0.3 
     * Initial build
@@ -75,7 +76,9 @@ See USAGE (python SeqHandler.py convert -h) for full list of supported files.
     * Reworked GBKSplit to SeqHandler
     * Created sub modules: split, merge & convert files
     * Explicit control of Input/Output for modules
-
+2013-09-05 Nabil-Fareed Alikhan <n.alikhan@uq.edu.au>-
+    * Changed fasta header handling for Prokka input in merge
+    * Added header override flags for merge
 
 LICENCE
 =======

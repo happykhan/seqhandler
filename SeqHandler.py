@@ -77,6 +77,10 @@ See USAGE (python SeqHandler.py convert -h) for full list of supported files.
     * Reworked GBKSplit to SeqHandler
     * Created sub modules: split, merge & convert files
     * Explicit control of Input/Output for modules
+2013-09-05 Nabil-Fareed Alikhan <n.alikhan@uq.edu.au> 
+    * Changed fasta header handling for Prokka input in merge
+    * Added header override flags for merge
+    
 
 """
 import sys, os, traceback, argparse
@@ -108,15 +112,23 @@ def mergeMod(args):
     # For each SeqRecord, I.e. complete gbk annotation obj in file
     fgbk = recs[0]
     from Bio.SeqFeature import SeqFeature, FeatureLocation
+    d = SeqFeature(FeatureLocation(0, len(fgbk) ), type="fasta_record",\
+                strand=1)
+    d.qualifiers["note"] = recs[0].name 
+    fgbk.features.append(d)
     for l in recs[1:]:
         d = SeqFeature(FeatureLocation(len(fgbk), len(fgbk) + len(l)), type="fasta_record",\
                 strand=1)
+        d.qualifiers["note"] = l.name 
         fgbk.features.append(d)
         fgbk += l
-    fgbk.id = recs[0].id
     fgbk.name = recs[0].name
     fgbk.description = recs[0].description
     fgbk.annotations = recs[0].annotations
+    if args.accession != None: 
+        fgbk.name = args.accession
+    if args.ver != None:
+        fgbk.id = fgbk.name +'.' + args.ver
     for f in fgbk.features:
         if f.type == 'source':
             fgbk.features.remove(f)
@@ -205,6 +217,10 @@ if __name__ == '__main__':
         merge_parser.add_argument('-i','--inFormat',action='store',\
                 choices=('embl', 'fasta', 'genbank'),\
                 default='genbank', help='Format of input file [def: genbank]')
+        merge_parser.add_argument('-a','--accession',action='store',\
+                help='User defined accession no/locus')
+        merge_parser.add_argument('-e','--ver',action='store',\
+                help='User defined version no')
         merge_parser.add_argument('-o','--outFormat',action='store',\
                 choices=('embl', 'fasta', 'genbank'),\
                 help='Format of output file')
