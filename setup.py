@@ -4,7 +4,7 @@
 import os
 import sys
 
-import seqhandler.__init__ as meta
+import SeqHandler.__init__ as meta
 
 try:
     from setuptools import setup
@@ -16,7 +16,7 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 packages = [
-    'to-gff',
+    meta.__title__,
 ]
 
 requires = []
@@ -26,20 +26,20 @@ for l in lines:
     requires.append(l.strip())
 
 setup(
-    name='to-gff',
+    name=meta.__title__,
     version=meta.__version__,
-    description='to-gff - Generate gff file from EMBL/Genbank for QUAST',
+    description=meta.__description__,
     long_description=open('README.rst').read(),
-    author='Mitchell Stanton-Cook',
-    author_email='m.stantoncook@gmail.com',
-    url='https://github.com/mscook/to-gff',
+    author=meta.__author__,
+    author_email=meta.__author_email__,
+    url=meta.__url__,
     packages=packages,
-    scripts = [],
+    scripts = [meta.__title__+"/"+meta.__title__']
     package_data={'': ['LICENSE']},
-    package_dir={'to-gff': 'to-gff'},
+    package_dir={meta.__title__: meta.__title__},
     include_package_data=True,
     install_requires=requires,
-    license=open('LICENSE').read(),
+    license=meta.__license__,
     zip_safe=False,
     classifiers=(
         'Environment :: Console',
