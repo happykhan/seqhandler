@@ -79,6 +79,11 @@ CHANGE LOG
 2013-09-05 Nabil-Fareed Alikhan <n.alikhan@uq.edu.au>-
     * Changed fasta header handling for Prokka input in merge
     * Added header override flags for merge
+2013-09-05 Mitchell Stanon-Cook <m.stantoncook@uq.edu.au>-
+    * Made into an installable package
+    * Installs a script (SeqHandler) system wide
+    * Small improvements in terms of using __init__ as a meta container
+
 
 LICENCE
 =======
