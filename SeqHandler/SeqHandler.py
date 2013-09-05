@@ -83,10 +83,10 @@ See USAGE (python SeqHandler.py convert -h) for full list of supported files.
     
 
 """
+import SeqHandler.__init__ as meta
 import sys, os, traceback, argparse
 import time
 from Bio import SeqIO
-import __init__ as meta
 
 epi = "Licence: %s by %s <%s>" % (meta.__license__, 
                                   meta.__author__,
@@ -195,7 +195,7 @@ if __name__ == '__main__':
         parser.add_argument ('-v', '--verbose', action='store_true', \
                 default=False, help='verbose output')
         parser.add_argument('--version', action='version', version='%(prog)s '\
-                + __version__)
+                + meta.__version__)
         subparsers = parser.add_subparsers(help='modules')
         split_parser = subparsers.add_parser('split', help='Splits sequence files')
         split_parser.add_argument('-f','--feature',action='store',default=\
