@@ -87,11 +87,14 @@ import sys, os, traceback, argparse
 import time
 from Bio import SeqIO
 
-__author__ = "Nabil-Fareed Alikhan"
-__licence__ = "GPLv3"
-__version__ = "0.5"
-__email__ = "n.alikhan@uq.edu.au"
-epi = "Licence: "+ __licence__ +  " by " + __author__ + " <" + __email__ + ">"
+
+epi = "Licence: %s by %s <%s>" % (meta.__license__, 
+                                  meta.__author__,
+                                  meta.__author_email__)
+__doc__ = " %s v%s - %s (%s)" % (meta.__title__, 
+                                 meta.__version__, 
+                                 meta.__description__, 
+                                 meta.__url__)
 
 def convertMod(args):
     try:
@@ -188,8 +191,7 @@ def splitMod(args):
 if __name__ == '__main__':
     try:
         start_time = time.time()
-        desc = __doc__.split('\n\n')[1].strip()
-        parser = argparse.ArgumentParser(description=desc,epilog=epi)
+        parser = argparse.ArgumentParser(description=__doc__ ,epilog=epi)
         parser.add_argument ('-v', '--verbose', action='store_true', \
                 default=False, help='verbose output')
         parser.add_argument('--version', action='version', version='%(prog)s '\
