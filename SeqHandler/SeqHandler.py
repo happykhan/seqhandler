@@ -86,7 +86,7 @@ See USAGE (python SeqHandler.py convert -h) for full list of supported files.
 import sys, os, traceback, argparse
 import time
 from Bio import SeqIO
-
+import __init__ as meta
 
 epi = "Licence: %s by %s <%s>" % (meta.__license__, 
                                   meta.__author__,
