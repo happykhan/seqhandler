@@ -84,12 +84,16 @@ See USAGE (python SeqHandler.py convert -h) for full list of supported files.
     * Made into an installable package
     * Installs a script (SeqHandler) system wide
     * Small improvements in terms of using __init__ as a meta container
+2013-09-06 Mitchell Stanon-Cook <m.stantoncook@uq.edu.au>-
+    * Added option to convert to/from gff
 
 """
 import SeqHandler.__init__ as meta
 import sys, os, traceback, argparse
 import time
+
 from Bio import SeqIO
+from BCBio import GFF
 
 epi = "Licence: %s by %s <%s>" % (meta.__license__, 
                                   meta.__author__,
@@ -99,15 +103,41 @@ __doc__ = " %s v%s - %s (%s)" % (meta.__title__,
                                  meta.__description__, 
                                  meta.__url__)
 
+
+def to_GFF(args):
+    """
+    Convert a GenBank or EMBL file to GFF
+
+    Biopython does not natively support GFF
+
+    Can be useful for QUAST (Quality Assessment Tool for Genome Assemblies)
+
+    :param args: an argparse args list
+    """
+    in_type = args.inFormat.lower()
+    with open(args.input) as fin, open(args.output, 'w') as fout:
+        GFF.write(SeqIO.parse(fin, in_type), fout)
+
+
 def convertMod(args):
-    try:
-        count = SeqIO.convert(args.input, args.inFormat, args.output, args.outFormat )
-        if count == 0:
-            sys.err.write('ERROR: No records converted. Possibly wrong input filetype\n')
-        else: 
-            if args.verbose: sys.err.write("Converted %i records\n" %count)
-    except ValueError:
-        sys.err.write("ERROR: ValueError, Could not convert file\n")
+    if args.outFormat.lower() == 'gff':
+        acceptable = ['genbank', 'embl']
+        if args.inFormat.lower() in acceptable:
+            to_GFF(args)
+            return None
+        else:
+            sys.err.write("ERROR: ValueError, Could not convert file\n") 
+            return None
+    else:
+        try:
+            count = SeqIO.convert(args.input, args.inFormat, args.output, args.outFormat )
+            if count == 0:
+                sys.err.write('ERROR: No records converted. Possibly wrong input filetype\n')
+            else: 
+                if args.verbose: sys.err.write("Converted %i records\n" %count)
+        except ValueError:
+            sys.err.write("ERROR: ValueError, Could not convert file\n")
+        return None
 
 def mergeMod(args):
 
@@ -243,8 +273,10 @@ if __name__ == '__main__':
         convert_parser.add_argument('-o','--outFormat',action='store',\
                 choices=('clustal', 'embl', 'fasta', 'fastq','fastq-solexa',\
                 'fastq-illumina','genbank','imgt','nexus', 'phd','phylip',\
-                'seqxml','sff','stockholm','tab', 'qual'),\
-                default='fasta', help='Format of output file [def: fasta]')
+                'seqxml','sff','stockholm','tab', 'qual', 'gff'),\
+                default='fasta', help=('Format of output file [def: fasta]. '
+                                        'If gff -i (--inFormat) must be '
+                                        'genbank or embl'))
         split_parser.set_defaults(func=splitMod)
         convert_parser.set_defaults(func=convertMod)
         merge_parser.set_defaults(func=mergeMod)

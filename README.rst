@@ -83,6 +83,8 @@ CHANGE LOG
     * Made into an installable package
     * Installs a script (SeqHandler) system wide
     * Small improvements in terms of using __init__ as a meta container
+2013-09-06 Mitchell Stanon-Cook <m.stantoncook@uq.edu.au>-
+    * Added option to convert to/from gff
 
 
 LICENCE

@@ -1,5 +1,5 @@
 __title__        = "SeqHandler" 
-__version__      = "0.6"
+__version__      = "0.7"
 __description__  = ("SeqHandler provides low level operations on sequence "
                     "files (FASTA, GenBank or EMBL files)")
 __author__       = ("Nabil-Fareed Alikhan (with contributions from "
