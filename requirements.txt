@@ -1,2 +1,2 @@
 biopython==1.73
-bcbio-gff
+bcbio-gff==0.6.4
